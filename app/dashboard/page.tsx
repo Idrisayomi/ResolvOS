@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { hasCustomerServiceAgentRole } from '@/lib/authz';
 
 type Ticket = {
   id: string;
@@ -76,6 +77,8 @@ function formatCurrency(value: number | null) {
 export default function HumanAgentDashboardPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [ordersById, setOrdersById] = useState<Record<string, Order>>({});
+  const [authLoading, setAuthLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
@@ -154,37 +157,69 @@ export default function HumanAgentDashboardPage() {
     setLoading(false);
   }
 
+  const initializeDashboard = useCallback(async () => {
+    setAuthLoading(true);
+    setError(null);
+
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    const user = userData.user;
+
+    if (userError || !user) {
+      setIsAuthorized(false);
+      setLoading(false);
+      setAuthLoading(false);
+      setError('You must be signed in as a customer service agent.');
+      return;
+    }
+
+    if (!hasCustomerServiceAgentRole(user)) {
+      setIsAuthorized(false);
+      setLoading(false);
+      setAuthLoading(false);
+      setError('Access denied. This page is restricted to customer service agents.');
+      return;
+    }
+
+    setIsAuthorized(true);
+    setAuthLoading(false);
+    await loadDashboardData();
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      void loadDashboardData();
+      void initializeDashboard();
     }, 0);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [initializeDashboard]);
 
   async function updateTicketDecision(ticketId: string, decision: 'approve' | 'reject') {
     setActionLoading(true);
     setError(null);
 
-    const summaryPrefix =
-      decision === 'approve'
-        ? '[Human Decision] Refund approved.'
-        : '[Human Decision] Refund rejected.';
+    const { data: sessionData } = await supabase.auth.getSession();
+    const accessToken = sessionData.session?.access_token;
 
-    const currentSummary = selectedTicket?.ai_summary ?? '';
-    const nextSummary = currentSummary ? `${summaryPrefix}\n${currentSummary}` : summaryPrefix;
+    if (!accessToken) {
+      setError('Your session expired. Please sign in again.');
+      setActionLoading(false);
+      return;
+    }
 
-    const { error: updateError } = await supabase
-      .from('tickets')
-      .update({
-        status: 'Resolved',
-        assigned_to: 'Human_Staff',
-        ai_summary: nextSummary,
-      })
-      .eq('id', ticketId);
+    const response = await fetch('/api/tickets/decision', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ ticketId, decision }),
+    });
 
-    if (updateError) {
-      setError(`Failed to update ticket: ${updateError.message}`);
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+      setError(payload?.error ?? 'Failed to update ticket.');
       setActionLoading(false);
       return;
     }
@@ -247,7 +282,19 @@ export default function HumanAgentDashboardPage() {
               <h2 className="text-lg font-semibold">Ticket Queue</h2>
             </div>
 
-            {loading ? (
+            {authLoading ? (
+              <div className="p-8 text-sm text-slate-500">Checking agent access...</div>
+            ) : !isAuthorized ? (
+              <div className="space-y-3 p-8 text-sm text-rose-700">
+                <p>{error ?? 'Access denied. This page is restricted.'}</p>
+                <a
+                  href="/agent/login"
+                  className="inline-flex rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Go to Agent Login
+                </a>
+              </div>
+            ) : loading ? (
               <div className="p-8 text-sm text-slate-500">Loading ticket data...</div>
             ) : error ? (
               <div className="p-8 text-sm text-rose-700">{error}</div>
