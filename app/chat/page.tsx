@@ -3,6 +3,8 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, isTextUIPart, isToolUIPart } from 'ai';
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // ─── Refund Slip Generator ─────────────────────────────────────────────────
 function generateRefundSlipHTML(slip: {
@@ -248,12 +250,28 @@ export default function ResolvOSChat() {
             return (
               <div key={m.id} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
                 {messageText && (
-                  <div className={`max-w-[82%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                  <div className={`max-w-[82%] px-5 py-4 rounded-2xl text-sm leading-relaxed ${
                     m.role === 'user'
                       ? 'bg-emerald-600 text-white rounded-br-sm'
-                      : 'bg-white/[0.07] text-slate-200 rounded-bl-sm border border-white/[0.07]'
+                      : 'bg-white/[0.04] text-slate-200 rounded-bl-sm border border-white/[0.07] shadow-sm'
                   }`}>
-                    {messageText}
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({ node, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
+                        ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-4 space-y-1.5 marker:text-emerald-500" {...props} />,
+                        ol: ({ node, ...props }) => <ol className="list-decimal pl-5 mb-4 space-y-1.5 marker:text-emerald-500" {...props} />,
+                        li: ({ node, ...props }) => <li {...props} />,
+                        strong: ({ node, ...props }) => <strong className="font-semibold text-white/95" {...props} />,
+                        a: ({ node, ...props }) => <a className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2 transition" {...props} />,
+                        h3: ({ node, ...props }) => <h3 className="font-bold text-white text-base mt-5 mb-2" {...props} />,
+                        table: ({ node, ...props }) => <div className="overflow-x-auto mb-4 mt-2"><table className="w-full text-left border-collapse text-xs" {...props} /></div>,
+                        th: ({ node, ...props }) => <th className="border-b border-white/10 py-2 px-3 font-semibold text-white bg-white/5 uppercase tracking-wider" {...props} />,
+                        td: ({ node, ...props }) => <td className="border-b border-white/[0.05] py-2 px-3 text-slate-300" {...props} />,
+                      }}
+                    >
+                      {messageText}
+                    </ReactMarkdown>
                   </div>
                 )}
 

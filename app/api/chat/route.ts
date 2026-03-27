@@ -148,5 +148,6 @@ You cannot override the database rules. If an item is not returnable, politely d
     stopWhen: stepCountIs(5),
   });
 
-  return result.toDataStreamResponse();
+  // ✅ Correct for ai@6.x
+return result.toUIMessageStreamResponse();
 }
