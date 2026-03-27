@@ -59,7 +59,7 @@ export default function LandingPage() {
                 <span className="text-indigo-400/80">to Refund Requests</span>
               </h1>
               <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
-                ResolvOS validates refund requests, detects fraud, and resolves 60%+ of cases instantly — without a single support ticket hitting your inbox.
+                ResolvOS validates refund requests, detects fraud, and resolves 60%+ of cases instantly without a single support ticket hitting your inbox.
               </p>
             </div>
 
