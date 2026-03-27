@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { hasCustomerServiceAgentRole } from '@/lib/authz';
 
 type DecisionPayload = {
@@ -14,7 +14,17 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Missing access token.' }, { status: 401 });
   }
 
-  const { data: userData, error: userError } = await supabase.auth.getUser(token);
+  // Create a Supabase client authenticated as the agent.
+  // This is the fix for the 404 — the default supabase client uses the anon key
+  // and can't see tickets behind RLS. We must pass the agent's token so RLS
+  // recognises their customer_service_agent role.
+  const authedSupabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { global: { headers: { Authorization: `Bearer ${token}` } } }
+  );
+
+  const { data: userData, error: userError } = await authedSupabase.auth.getUser(token);
   const user = userData.user;
 
   if (userError || !user) {
@@ -33,7 +43,7 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Invalid request payload.' }, { status: 400 });
   }
 
-  const { data: ticketRow, error: ticketError } = await supabase
+  const { data: ticketRow, error: ticketError } = await authedSupabase
     .from('tickets')
     .select('id, ai_summary')
     .eq('id', ticketId)
@@ -53,14 +63,14 @@ export async function POST(req: Request) {
     ? `${summaryPrefix}\n${currentSummary}`
     : summaryPrefix;
 
-  const { error: updateError } = await supabase
-    .from('tickets')
-    .update({
-      status: 'Resolved',
-      assigned_to: 'Human_Staff',
-      ai_summary: nextSummary,
-    })
-    .eq('id', ticketId);
+  const { error: updateError } = await authedSupabase
+  .from('tickets')
+  .update({
+    status: decision === 'approve' ? 'Resolved' : 'Rejected by Human',
+    assigned_to: 'Human_Staff',
+    ai_summary: nextSummary,
+  })
+  .eq('id', ticketId);
 
   if (updateError) {
     return Response.json(
@@ -71,4 +81,3 @@ export async function POST(req: Request) {
 
   return Response.json({ ok: true });
 }
-

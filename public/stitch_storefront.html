@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResolvOS | Zenith Ergonomic Desk Series</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b2bee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-gradient {
+            background: linear-gradient(180deg, rgba(43, 43, 238, 0.05) 0%, rgba(16, 16, 34, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 border-b border-primary/10 bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">terminal</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-white">ResolvOS</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Collections</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Design Studio</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Showroom</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+<input class="bg-primary/5 border border-primary/20 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 w-64 placeholder:text-slate-600" placeholder="Search collection..." type="text"/>
+</div>
+<button class="flex items-center justify-center p-2 text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<div class="size-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-slate-500 mb-8">
+<a class="hover:text-primary transition-colors" href="#">Lifestyle</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Furniture</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary">Zenith Pro-V1</span>
+</nav>
+<div class="grid lg:grid-cols-2 gap-16 items-start">
+<!-- Product Visuals -->
+<div class="space-y-6">
+<div class="aspect-square rounded-xl overflow-hidden glass relative group">
+<img alt="Zenith Ergonomic Desk" class="w-full h-full object-cover" data-alt="Minimalist luxury wooden desk with integrated tech ports and sleek black legs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNejrZmeHfYHlz6qTw8Mzm3wqUd8JIOup1QCx45Tki_kcQxLeIWboKRvJ0jSHENTlOTDp7RzXQ9wvJjgyrWSd6OiYp7USA2rphL_I4H9sQxQUstg5wtR3aJx05JidS3sgH5jrvXg62i3xFGmn6qIWoUAEX_4QbkiBYbaaymBu4TrWzHY8aryxi1gdC8vnnU8IKalGR12ChoKS3PrbwWY6Xg9KbalHosCyRzrspJ4ViZ7A4ncOv8eVP7QyQCVIj6YmP6Jgz92GxXQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<span class="bg-primary px-3 py-1 rounded text-[10px] font-bold tracking-widest uppercase text-white">Artisan Crafted</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg glass border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<img class="w-full h-full object-cover opacity-60" data-alt="Close up of wood grain finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtc4aossoVEIWiPctbcmeuBWRGBTREV391cm3fikISRZDJ1QvvxXCgsj-DqbswYAlIROx2JTWtBDAZ0jk29qCIWSEtSeYGPbivY_P6xZvwXfG9uIZsFF_puND2Q73llYYv8CsNZXP6z0Z8att0ml8x_OXqr4QLLaSXP3IHxQqow7WuzkX8_7c3SVtjD_miRpIFbSQHWzYDSyeY0b06zdue6kDvqGHBmc5S-2PWCIYcTGfWawA-VbgP_47ksqvOkTnyjB7XqvMT_g"/>
+</div>
+<div class="aspect-square rounded-lg glass overflow-hidden cursor-pointer hover:border-primary transition-all">
+<img class="w-full h-full object-cover opacity-60" data-alt="Integrated wireless charging pad detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7ywV1n8fU-xAtVx5fidkXwECiMlDF7gNF_DIxYiiQh-C5DXKeaQ8jefVrihk5laf0PMvIK4S6Y_wFUWPKLBTogfdbeVTn5iRCgaCxO_xgEM96Q1FRE7PijLFM8qx5_g0dPGkw2THCpbWR6x-dEcW4PpdNz4ptkHD__nmHr2pzr_z4mhqLuXESFYQ2Zg7KqCi2AyBfAdRm9hi9kMnB_DlcXCKMQu0CUiogRVPvEFMEQ1SmJXKyeQngQNmoqghmdZtXk4E7A9dCQ"/>
+</div>
+<div class="aspect-square rounded-lg glass overflow-hidden cursor-pointer hover:border-primary transition-all">
+<img class="w-full h-full object-cover opacity-60" data-alt="Hidden cable management system" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMtvXG6NQjhHANy8ugS5_7sh3bzQBSCRhUUQiczJ9oYucOsiqf8kTcSlhsanZAmnsowtssSuM9lI9ffWfQ6eQleqWga4b-fwQXL9rm4NT7Yayzh_ti4J5gyd050CXCUA0YCfN9zoG-3cT9TS3lbgG7CL4-0ywTMWEl3zYGlHvDWOpRNJFkOi_ENrReWfepRUZWZkXBMVZDe7IOQbQcl4Y620zSmOHuWTtz8YblK8qIH8QbMtqrzR-suDqiVe05RjH-dbi7hVTI4g"/>
+</div>
+<div class="aspect-square rounded-lg glass overflow-hidden cursor-pointer hover:border-primary transition-all">
+<img class="w-full h-full object-cover opacity-60" data-alt="Brushed aluminum desk legs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2RKT99Vb8o9zZI76RYxWqkiazwEr00EzOMvRPiz8FDQf9ISl5LvRUpHuqB9cDE3QP32a77gj6dqjiwYw6RlWBCmRXYCNtu26LHn6U0hrKevHEtGcYTIWulKtehXYeW9zKMB-GGC0v-GMap86Ih2rVhyvbeIdw_uoBa93jwnyzyFUEyHz9Xmt7m7Lr23ahyfQzh19zkFSKvEtDwd_EgBOMFJ6lXIXEk1MRpgnqMDkALYPXRPCe9mWyjzRtmY8XE7AOsqqKAobDSw"/>
+</div>
+</div>
+</div>
+<!-- Product Info -->
+<div class="space-y-10">
+<div class="space-y-4">
+<h1 class="text-5xl font-bold tracking-tight text-white leading-tight">Zenith Ergonomic <br/><span class="text-primary/80">Signature Series</span></h1>
+<p class="text-slate-400 text-lg leading-relaxed max-w-xl">
+                        The ultimate workspace for creative professionals. Hand-finished walnut meets aerospace-grade aluminum with integrated ResolvOS smart-surface technology.
+                    </p>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-3 gap-6">
+<div class="p-6 rounded-xl glass border-primary/10">
+<p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Load Limit</p>
+<p class="text-2xl font-bold text-white">150 KG</p>
+</div>
+<div class="p-6 rounded-xl glass border-primary/10">
+<p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Lift Speed</p>
+<p class="text-2xl font-bold text-white">38 MM/s</p>
+</div>
+<div class="p-6 rounded-xl glass border-primary/10">
+<p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Warranty</p>
+<p class="text-2xl font-bold text-white">15 YRS</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-primary/20">
+<div>
+<p class="text-sm font-semibold text-white">Grand Studio Configuration</p>
+<p class="text-xs text-slate-500">American Walnut, Dual Motor, 180cm Width</p>
+</div>
+<p class="text-xl font-bold text-white">$2,899</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">shopping_bag</span>
+                            Reserve Now
+                        </button>
+<button class="px-8 py-4 rounded-lg glass border-primary/30 text-white font-semibold hover:bg-primary/10 transition-all">
+                            Customize
+                        </button>
+</div>
+</div>
+<!-- Specs List -->
+<div class="border-t border-primary/10 pt-8 space-y-4">
+<div class="flex justify-between items-center py-2">
+<span class="text-slate-400">Material</span>
+<span class="text-white font-medium">Sustainably Sourced Walnut</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-slate-400">Electronics</span>
+<span class="text-white font-medium">Resolv Smart Hub 2.0</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-slate-400">Connectivity</span>
+<span class="text-white font-medium">USB-C PD 100W / Qi 15W</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-32 border-t border-primary/10 py-20 bg-background-dark/50">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="size-6 bg-primary rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">terminal</span>
+</div>
+<span class="text-lg font-bold tracking-tight text-white uppercase">ResolvOS</span>
+</div>
+<p class="text-sm text-slate-500">Intelligent lifestyle engineering. Redefining the harmony between work and wellness.</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Furniture</h4>
+<ul class="space-y-3 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Zenith Series</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Apex Chairs</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Studio Audio</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Concierge</h4>
+<ul class="space-y-3 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Delivery</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Bespoke Design</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Logistics</h4>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-sm text-slate-400">Dispatch Center Online</span>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-primary/5 flex justify-between items-center text-xs text-slate-600 uppercase tracking-widest">
+<span>© 2024 ResolvOS Lifestyle Technologies</span>
+<div class="flex gap-8">
+<a href="#">Ethics</a>
+<a href="#">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Chat Widget Section -->
+<div class="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-6">
+<!-- Chat Panel -->
+<div class="w-96 h-[600px] glass rounded-xl shadow-2xl overflow-hidden flex flex-col border-primary/20">
+<!-- Chat Header -->
+<div class="p-6 border-b border-primary/10 flex items-center justify-between bg-primary/5">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white">terminal</span>
+</div>
+<div>
+<h3 class="text-sm font-bold text-white">ResolvOS</h3>
+<div class="flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+<p class="text-[10px] text-slate-400 uppercase tracking-tight">Personal Concierge Agent</p>
+</div>
+</div>
+</div>
+<button class="text-slate-500 hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<!-- Message Thread -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2">
+<div class="bg-primary/20 border border-primary/30 p-4 rounded-2xl rounded-tr-none max-w-[85%]">
+<p class="text-sm text-slate-200">I'm tracking my Zenith Signature desk. It says 'custom finish application' — what is the ETA for shipping?</p>
+</div>
+<span class="text-[10px] text-slate-500 uppercase">14:20 PM</span>
+</div>
+<!-- AI Thinking Chips -->
+<div class="space-y-2">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-background-dark border border-primary/10 w-fit">
+<span class="text-[10px] font-mono text-emerald-400">⚡ fetch_artisan_log: COMPLETE — Curing phase</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-background-dark border border-primary/10 w-fit">
+<span class="text-[10px] font-mono text-emerald-400">⚡ courier_slots: CHECKED</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-background-dark border border-primary/10 w-fit">
+<span class="text-[10px] font-mono text-emerald-400">⚡ priority_shipping: ACTIVE</span>
+</div>
+</div>
+<!-- AI Response -->
+<div class="flex flex-col items-start gap-2">
+<div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl rounded-tl-none max-w-[85%]">
+<p class="text-sm text-slate-300">Your order <span class="text-primary font-mono">#ZN-441-WL</span> is currently in our finishing lab. The walnut top is undergoing its final hand-oil treatment.</p>
+<p class="text-sm text-slate-300 mt-3">We expect dispatch in 48 hours via White Glove delivery. Would you like me to schedule your installation window now?</p>
+</div>
+<span class="text-[10px] text-slate-500 uppercase">14:21 PM</span>
+</div>
+</div>
+<!-- Input Bar -->
+<div class="p-4 border-t border-primary/10 bg-background-dark/50">
+<div class="relative">
+<input class="w-full bg-primary/5 border border-primary/20 rounded-lg py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 text-white placeholder:text-slate-600" placeholder="Ask about your order..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floating Chat Button -->
+<button class="group relative size-16 bg-primary rounded-full flex items-center justify-center shadow-2xl shadow-primary/40 hover:scale-105 transition-transform">
+<span class="text-white font-bold text-2xl tracking-tighter">R</span>
+<div class="absolute -top-1 -right-1 size-4 bg-emerald-500 border-2 border-background-dark rounded-full animate-pulse"></div>
+</button>
+</div>
+</body></html>

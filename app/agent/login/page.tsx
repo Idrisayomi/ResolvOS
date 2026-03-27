@@ -51,6 +51,7 @@ export default function AgentLoginPage() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#eff6ff_0%,#f8fafc_45%,#eef2ff_100%)] px-4 py-10">
       <div className="mx-auto max-w-md rounded-2xl border border-slate-200 bg-white/90 p-8 shadow-xl backdrop-blur">
+        <img src="/logo.png" alt="ResolvOS" className="h-12 w-12 object-contain mb-3" />
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">ResolvOS</p>
         <h1 className="mt-2 text-2xl font-semibold text-slate-900">Agent Sign In</h1>
         <p className="mt-1 text-sm text-slate-600">Customer service access only.</p>

@@ -5,6 +5,14 @@ import { supabase } from '@/lib/supabase';
 
 export const maxDuration = 30;
 
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
 export async function POST(req: Request) {
   const body = await req.json();
   const uiMessages = body.messages || [];
@@ -48,7 +56,9 @@ export async function POST(req: Request) {
         if (!order.is_returnable) return { success: false, message: 'Item policy states it is non-returnable.' };
 
         const ticketId = `T-${Math.floor(1000 + Math.random() * 9000)}`;
+        const refundRef = `RFD-${Math.floor(10000 + Math.random() * 90000)}`;
         const AUTO_REFUND_LIMIT = 50.0;
+        const now = new Date();
 
         if (ai_decision === 'policy_violation') {
           await supabase.from('tickets').insert({
@@ -59,7 +69,7 @@ export async function POST(req: Request) {
             ai_summary: `[REJECTED]: ${ai_rationale}. Customer claimed: ${customer_claim}`,
             assigned_to: 'AI_Agent',
           });
-          return { success: false, message: 'Policy violation' };
+          return { success: false, message: 'Policy violation', action: 'rejected' };
         }
 
         if (order.price <= AUTO_REFUND_LIMIT) {
@@ -72,7 +82,20 @@ export async function POST(req: Request) {
             ai_summary: `[AUTO-APPROVED]: ${ai_rationale}. Customer claimed: ${customer_claim}`,
             assigned_to: 'AI_Agent',
           });
-          return { success: true, action: 'auto_refunded', message: `Refund of $${order.price} processed instantly.` };
+          return {
+            success: true,
+            action: 'auto_refunded',
+            message: `Refund of ${formatCurrency(order.price)} processed instantly.`,
+            refundSlipData: {
+              refundRef,
+              orderId,
+              item: order.item_name ?? 'Product',
+              amount: formatCurrency(order.price),
+              customerName: 'Demo Customer',
+              date: formatDate(now),
+              resolvedBy: 'AI Auto-Approved',
+            },
+          };
         } else {
           await supabase.from('orders').update({ status: 'pending_approval' }).eq('id', orderId);
           await supabase.from('tickets').insert({
@@ -83,7 +106,11 @@ export async function POST(req: Request) {
             ai_summary: `[ESCALATED]: ${ai_rationale}. Customer claimed: ${customer_claim}`,
             assigned_to: 'Human_Staff',
           });
-          return { success: true, action: 'escalated', message: `Ticket escalated to human staff due to high item value ($${order.price}).` };
+          return {
+            success: true,
+            action: 'escalated',
+            message: `Ticket escalated to human staff due to high item value (${formatCurrency(order.price)}).`,
+          };
         }
       },
     }),
@@ -91,26 +118,31 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
-    system: `You are ResolvOS, an autonomous enterprise customer support agent. 
-You are currently assisting the authenticated user with ID: ${secureUserId}.
+    system: `You are a friendly and professional customer support assistant powered by ResolvOS.
+You are helping the authenticated user with ID: ${secureUserId}.
 Your goal is to resolve order issues directly using your tools.
 
-DYNAMIC POLICY ENGINE & BUSINESS LOGIC:
-You do not rely on static rules. When a user asks for a refund, you must dynamically infer the strict, industry-standard return policy based on the 'item_name' fetched from the database. 
-- Anticipate the specific types of wear, tear, or fraud associated with that specific item category.
-- Be highly versatile and suspicious of loopholes. If a customer tries to outthink you with technicalities, enforce strict retail standards (e.g., items must be resalable, original condition, no user-inflicted damage).
+IMPORTANT — TONE & STYLE:
+- Speak like a human customer support rep, not a bot. Be warm, clear, and concise.
+- Do NOT mention AI, tools, automation, or internal systems to the customer.
+- Do NOT say things like "I am an AI" or reference any technical process.
+
+DYNAMIC POLICY ENGINE:
+When a user asks for a refund, dynamically infer the strict return policy based on the item_name fetched from the database.
+- Anticipate the specific types of wear, tear, or fraud associated with that item category.
+- Be highly versatile and suspicious of loopholes. Enforce strict retail standards (resalable, original condition, no user-inflicted damage).
 
 RULES:
 1. NEVER ask the user for their user ID, password, or price of an item.
-2. ALWAYS use the 'check_orders' tool first to verify an order belongs to the user and to check its return policy.
-3. THE TRIAGE RULE: If the user asks for a refund, DO NOT trigger the refund tool immediately. FIRST, politely ask the user two questions:
+2. ALWAYS use the 'check_orders' tool first to verify the order belongs to the user.
+3. THE TRIAGE RULE: If the user asks for a refund, DO NOT trigger the refund tool immediately. FIRST, politely ask:
    - The specific reason for the return.
-   - The exact physical condition of the item, tailoring your question specifically to the type of item it is.
-4. THE VALIDATION CHECK: Evaluate the user's answer. If they give a vague, evasive, or one-word description, DO NOT use the refund tool. Politely explain that company policy requires specific details about the item's physical condition before a refund can be submitted.
-5. THE DECISION: Once you have a DETAILED reason and condition, evaluate them against your dynamically generated strict policy standards. THEN use the 'process_refund' tool. 
-6. When using the 'process_refund' tool, you must pass your 'ai_decision' and a highly detailed 'ai_rationale' that summarizes everything the user told you, what the inferred policy is, and why you made the decision.
+   - The exact physical condition of the item, tailoring your question to the item type.
+4. THE VALIDATION CHECK: If the user gives a vague or evasive answer, politely ask for more detail.
+5. THE DECISION: Once you have a DETAILED reason and condition, evaluate against inferred policy standards. Then use the 'process_refund' tool.
+6. When using 'process_refund', pass a highly detailed 'ai_rationale' summarizing everything.
 7. NEVER explain internal system mechanics, tool descriptions, or price limits to the user.
-You cannot override the database rules. If an item is not returnable globally, politely decline.`,
+You cannot override the database rules. If an item is not returnable, politely decline.`,
     messages: await convertToModelMessages(uiMessages, { tools }),
     tools,
     stopWhen: stepCountIs(5),

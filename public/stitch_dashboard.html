@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResolvOS | Human Agent Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b2bee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(43, 43, 238, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(43, 43, 238, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30">
+<!-- Sticky Top Nav -->
+<nav class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="size-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">terminal</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white uppercase italic">ResolvOS</h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1" href="#">Agent Hub</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Analytics</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-3 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="size-2 rounded-full bg-emerald-500 animate-pulse-soft shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
+<span class="text-xs font-bold uppercase tracking-widest text-emerald-500">System Online</span>
+</div>
+<div class="flex items-center gap-4 pl-6 border-l border-slate-200 dark:border-slate-800">
+<div class="flex flex-col items-end">
+<span class="text-xs font-bold text-slate-900 dark:text-white">agent.alex@resolvos.ai</span>
+<span class="text-[10px] uppercase tracking-tighter text-slate-500">Tier 3 Supervisor</span>
+</div>
+<div class="size-9 rounded-full bg-primary/20 border border-primary/30 overflow-hidden" data-alt="Agent profile avatar abstract pattern">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Minimalist geometric user avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL_wrvc_WcZAyGKVqqBSdYFbBcIRC6x4J4YpW56iVlgBOQO8yo5RbyLzsHSb-vE7hkXQrnPpnifHD6HTBRdbba4XvAnSzT_EWs_9-o35u8Be8jKZ-gdSUROGN9Y5JWY0X7XWL42iskXGSOI70wAIJ4m0Em2bOVZLIJ7YgFOUvEkRVBZzy1kaVgwg6GToWKL2EWUM7Ap_qtAbpY1L2Ng96Cj2b4Hk5wwG6y8j0T3MlBXd_CvOXW6dwCUXgPjC85jgA4Sxi-29DvFw"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/20">
+                        Sign Out
+                    </button>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1440px] mx-auto px-6 py-8 space-y-8">
+<!-- Top Metrics Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Total Tickets -->
+<div class="p-5 rounded-xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-slate-400">confirmation_number</span>
+<span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded uppercase">+12.4%</span>
+</div>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Tickets</h3>
+<p class="text-3xl font-bold mt-1 text-slate-900 dark:text-white tabular-nums">1,284</p>
+<p class="text-[11px] text-slate-400 mt-2 italic">Active reporting period</p>
+</div>
+<!-- Auto-Resolved -->
+<div class="p-5 rounded-xl bg-white dark:bg-slate-900/40 border border-emerald-500/30 shadow-sm group hover:border-emerald-500 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-emerald-500">bolt</span>
+<span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded uppercase">73% Efficiency</span>
+</div>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Auto-Resolved by AI</h3>
+<p class="text-3xl font-bold mt-1 text-slate-900 dark:text-white tabular-nums">942</p>
+<p class="text-[11px] text-emerald-500 mt-2 font-medium">via AI agent (Standard Tier)</p>
+</div>
+<!-- Needs Review -->
+<div class="p-5 rounded-xl bg-white dark:bg-slate-900/40 border border-amber-500/30 shadow-sm group hover:border-amber-500 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-500">priority_high</span>
+<div class="size-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_5px_rgba(245,158,11,0.8)]"></div>
+</div>
+<span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded uppercase">High Priority</span>
+</div>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Needs Human Review</h3>
+<p class="text-3xl font-bold mt-1 text-slate-900 dark:text-white tabular-nums">156</p>
+<p class="text-[11px] text-amber-500 mt-2 font-medium">awaiting immediate action</p>
+</div>
+<!-- Rejected -->
+<div class="p-5 rounded-xl bg-white dark:bg-slate-900/40 border border-red-500/30 shadow-sm group hover:border-red-500 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-red-500">gavel</span>
+<span class="text-[10px] font-bold text-red-500 bg-red-500/10 px-2 py-0.5 rounded uppercase">Flagged</span>
+</div>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Rejected</h3>
+<p class="text-3xl font-bold mt-1 text-slate-900 dark:text-white tabular-nums">186</p>
+<p class="text-[11px] text-red-500 mt-2 font-medium">policy violations detected</p>
+</div>
+</div>
+<!-- Ticket Queue Section -->
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+<!-- Tabs -->
+<div class="px-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex gap-8">
+<button class="py-4 border-b-2 border-primary text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        All Tickets <span class="text-[10px] bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded">1,284</span>
+</button>
+<button class="py-4 border-b-2 border-transparent text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+                        Needs Review <span class="text-[10px] bg-amber-500/10 text-amber-500 px-1.5 py-0.5 rounded">156</span>
+</button>
+<button class="py-4 border-b-2 border-transparent text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+                        Auto-Resolved <span class="text-[10px] bg-emerald-500/10 text-emerald-500 px-1.5 py-0.5 rounded">942</span>
+</button>
+<button class="py-4 border-b-2 border-transparent text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+                        Rejected <span class="text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded">186</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded text-xs focus:ring-1 focus:ring-primary focus:border-primary outline-none w-64" placeholder="Filter queue..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/30">
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Ticket ID</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Product</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Order Value</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">AI Summary</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-center">Handler</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="group hover:bg-primary/[0.03] dark:hover:bg-primary/[0.05] transition-colors cursor-pointer">
+<td class="px-6 py-4 font-bold text-sm text-slate-900 dark:text-white">#8842</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-tight bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                                    Needs Review
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Titan GPU</td>
+<td class="px-6 py-4 text-sm font-medium tabular-nums">$2,499.00</td>
+<td class="px-6 py-4 max-w-xs">
+<p class="text-xs text-slate-500 line-clamp-2 italic leading-relaxed">
+                                    Customer claims DOA; AI detected inconsistent usage logs from hardware telemetry. Requires manual verification.
+                                </p>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                                    Human <span class="material-symbols-outlined text-xs">person</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-[11px] font-medium text-slate-400 uppercase italic">2m ago</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group bg-slate-50/50 dark:bg-slate-800/10 hover:bg-primary/[0.03] dark:hover:bg-primary/[0.05] transition-colors cursor-pointer">
+<td class="px-6 py-4 font-bold text-sm text-slate-900 dark:text-white">#8841</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-tight bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                    Resolved
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Nexus 5</td>
+<td class="px-6 py-4 text-sm font-medium tabular-nums">$899.00</td>
+<td class="px-6 py-4 max-w-xs">
+<p class="text-xs text-slate-500 line-clamp-2 italic leading-relaxed">
+                                    Standard return request initiated. Customer within 30-day window. RMA issued automatically.
+                                </p>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                                    AI Agent <span class="material-symbols-outlined text-xs">bolt</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-[11px] font-medium text-slate-400 uppercase italic">5m ago</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-primary/[0.03] dark:hover:bg-primary/[0.05] transition-colors cursor-pointer">
+<td class="px-6 py-4 font-bold text-sm text-slate-900 dark:text-white">#8840</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-tight bg-red-500/10 text-red-500 border border-red-500/20">
+                                    Rejected by AI
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Cloud Credits</td>
+<td class="px-6 py-4 text-sm font-medium tabular-nums">$500.00</td>
+<td class="px-6 py-4 max-w-xs">
+<p class="text-xs text-slate-500 line-clamp-2 italic leading-relaxed">
+                                    Violation: Promotional abuse detected. Account linked to 5 previously banned identities.
+                                </p>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                                    AI Agent <span class="material-symbols-outlined text-xs">bolt</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-[11px] font-medium text-slate-400 uppercase italic">12m ago</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group bg-slate-50/50 dark:bg-slate-800/10 hover:bg-primary/[0.03] dark:hover:bg-primary/[0.05] transition-colors cursor-pointer">
+<td class="px-6 py-4 font-bold text-sm text-slate-900 dark:text-white">#8839</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-tight bg-slate-600/10 text-slate-500 border border-slate-500/20">
+                                    Rejected by Human
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Smart Watch</td>
+<td class="px-6 py-4 text-sm font-medium tabular-nums">$349.00</td>
+<td class="px-6 py-4 max-w-xs">
+<p class="text-xs text-slate-500 line-clamp-2 italic leading-relaxed">
+                                    Warranty voided per human inspection of attached photos. Evidence of water damage in internal sensor area.
+                                </p>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                                    Human <span class="material-symbols-outlined text-xs">person</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-[11px] font-medium text-slate-400 uppercase italic">18m ago</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-primary/[0.03] dark:hover:bg-primary/[0.05] transition-colors cursor-pointer">
+<td class="px-6 py-4 font-bold text-sm text-slate-900 dark:text-white">#8838</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-tight bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                                    Needs Review
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Home Hub</td>
+<td class="px-6 py-4 text-sm font-medium tabular-nums">$129.00</td>
+<td class="px-6 py-4 max-w-xs">
+<p class="text-xs text-slate-500 line-clamp-2 italic leading-relaxed">
+                                    Sentiment: High frustration detected. Customer requested escalation to manager. Context window exceeds AI buffer.
+                                </p>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                                    Human <span class="material-symbols-outlined text-xs">person</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-[11px] font-medium text-slate-400 uppercase italic">25m ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer Pagination Placeholder -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-800/10">
+<span class="text-[11px] text-slate-500 font-medium">Showing 1-5 of 1,284 tickets</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded text-[10px] font-bold uppercase text-slate-600 dark:text-slate-400 disabled:opacity-50" disabled="">Prev</button>
+<button class="px-3 py-1 bg-primary text-white rounded text-[10px] font-bold uppercase">Next</button>
+</div>
+</div>
+</div>
+<!-- System Footer -->
+<footer class="pt-10 pb-6 text-center border-t border-slate-200 dark:border-slate-800">
+<div class="flex flex-col items-center gap-2">
+<div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+<span>ResolvOS Autonomous Agent</span>
+<span class="size-1 rounded-full bg-slate-600"></span>
+<span>All decisions logged</span>
+<span class="size-1 rounded-full bg-slate-600"></span>
+<span class="text-primary/70">Kill switch available in next release v2.4.0</span>
+</div>
+<p class="text-[10px] text-slate-500 font-medium opacity-60 italic">Secure Command Center Interface · E2E Encrypted</p>
+</div>
+</footer>
+</main>
+</body></html>
