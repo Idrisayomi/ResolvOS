@@ -276,6 +276,8 @@ This project is private and proprietary. All rights reserved.
 
 ---
 
+### check it out @ https://resolv-os-git-main-akintunde-idris-projects.vercel.app/
+
 <p align="center">
   <strong>ResolvOS</strong> — Autonomous Customer Operations · Zero-Trust Architecture · Every Decision Logged
 </p>
